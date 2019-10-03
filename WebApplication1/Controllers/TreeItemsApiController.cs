@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication1.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TreeItemApiController : ControllerBase
+    public class TreeItemsApiController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public TreeItemApiController(ApplicationDbContext context)
+        public TreeItemsApiController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -26,7 +28,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: api/TreeItemApi/5
-        [HttpGet("item/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<TreeItem>> GetTreeItem(int id)
         {
             var treeItem = await _context.TreeItem.FindAsync(id);
@@ -40,6 +42,8 @@ namespace WebApplication1.Controllers
         }
 
         // PUT: api/TreeItemApi/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTreeItem(int id, TreeItem treeItem)
         {
@@ -70,6 +74,8 @@ namespace WebApplication1.Controllers
         }
 
         // POST: api/TreeItemApi
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
         public async Task<ActionResult<TreeItem>> PostTreeItem(TreeItem treeItem)
         {
@@ -99,40 +105,5 @@ namespace WebApplication1.Controllers
         {
             return _context.TreeItem.Any(e => e.ID == id);
         }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetTree(int id)
-        {
-            List<TreeItem> tree = new List<TreeItem>(); // one tree 
-
-            //find 1st root            
-            var root = await _context.TreeItem             //find 1st root            
-
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (root == null)
-            {
-                return NotFound(); //no any roots
-            }
-
-            tree = BuildTreeRec(root, tree);
-            return CreatedAtAction("GetTree", tree);
-        }
-
-
-        private List<TreeItem> BuildTreeRec(TreeItem item, List<TreeItem> tree)
-        {
-            tree.Add(item);
-            var elems = _context.TreeItem.Where(m => m.Parent == item.ID);
-            if (elems != null)
-            {
-                foreach (TreeItem elem in elems)
-                {
-                    BuildTreeRec(elem, tree);
-                }
-            }
-            return tree;
-        }
-
-
     }
 }

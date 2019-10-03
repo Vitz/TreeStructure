@@ -5,4 +5,4 @@
     setActionMoveIcons();
     setActionDeleteIcons();
     setActionAddIcons();
-}
+};

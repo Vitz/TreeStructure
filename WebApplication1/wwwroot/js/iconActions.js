@@ -35,10 +35,11 @@ function setActionMoveIcons() {
         $("div[title='edit_icon']").click(function (e) {
             var id = this.parentElement.parentElement.id;
             document.getElementById("selected_id").value = id
-            $.getJSON("/api/treeitemapi/item/" + id, {}, function (data, response) {
+            $.getJSON("/api/treeitemsapi/" + id, {}, function (data, response) {
                 var id = data.id
                 var value = data.value
                 var parent = data.parent
+                //alert(parent)
                 document.getElementById("selected_id").value = id
                 document.getElementById("selected_value").value = value
                 $("option[value=" + parent + "]").attr("selected", "selected")

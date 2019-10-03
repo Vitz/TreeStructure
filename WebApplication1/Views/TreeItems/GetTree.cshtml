@@ -4,11 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-        crossorigin="anonymous"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 
-<!-- Font Awesome CSS -->
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 
@@ -24,7 +22,7 @@
 {
     @if (TempData["msg"] != null)
     {
-    <div class="alert alert-success">@TempData["msg"]</div>
+        <div class="alert alert-success">@TempData["msg"]</div>
     }
 
     <ul id="tree" name="tree"></ul>
@@ -109,11 +107,11 @@ else
 {
     <p>Sorry, this page is only for Administrators</p>
 }
-<script src="~/js/controller.js"></script>
 <script src="~/js/iconClass.js"></script>
 <script src="~/js/iconActions.js"></script>
 <script src="~/js/treeView.js"></script>
-<script src="~/js/prepareRow.js"></script>
 <script src="~/js/setActionsToIcons.js"></script>
+<script src="~/js/prepareRow.js"></script>
+<script src="~/js/controller.js"></script>
 
 

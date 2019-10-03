@@ -3,7 +3,7 @@
 function fillOptionsWithParents(tree_id) {
     var select_edit = $('#select_parent_edit')
     var select_add = $('#select_parent_add')
-    var url = '/api/treeitemapi/' + tree_id;
+    var url = '/api/treeapi/' + tree_id;
     $.get(url, {}, function (data, response) {
         $(data).each
             (function (_, item) {
@@ -11,7 +11,7 @@ function fillOptionsWithParents(tree_id) {
                 select_add.append(new Option(item.value, item.id));
             });
     });
-}
+};
 
 // make leaf insted of branch
 function deletIconsWhenNoChildren() {
@@ -26,7 +26,11 @@ function deletIconsWhenNoChildren() {
             $(this).parent().addClass("leaf")
         }
     });
-}
+};
 
-
-
+// for redirections after edit/add      
+function setRedirectionId() {
+    $("input[name=rootId]").each(function (_, item) {
+        this.value = getTreeId();
+    });
+};

@@ -77,7 +77,6 @@ namespace WebApplication1.Controllers
         }
 
 
-        // GET: TreeItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,7 +94,7 @@ namespace WebApplication1.Controllers
 
         // POST: TreeItems/Move/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+      //  [ValidateAntiForgeryToken]
         public IActionResult Move(int id, [Bind("ID,Value,Parent")] TreeItem treeItem, int rootId)
         {
             if (id != treeItem.ID) 
@@ -168,7 +167,7 @@ namespace WebApplication1.Controllers
 
         // POST: TreeItems/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       // [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Value,Parent")] TreeItem treeItem)
         {
             if (id != treeItem.ID)
@@ -244,6 +243,9 @@ namespace WebApplication1.Controllers
             return View(roots);
         }
 
+
+
+
         public async Task<IActionResult> GetTreeItems(int id)
         {
             List<TreeItem> tree = new List<TreeItem>(); // one tree 
@@ -258,14 +260,14 @@ namespace WebApplication1.Controllers
             }
 
             tree = BuildTreeRec(root, tree);
-            return View(tree);
+            return View(tree.ToList());
         }
 
 
         private List<TreeItem> BuildTreeRec(TreeItem root, List<TreeItem> tree) 
         {
             tree.Add(root);
-            var elems = _context.TreeItem.Where(m => m.Parent == root.ID);
+            var elems = _context.TreeItem.Where(m => m.Parent == root.ID).ToList();
             if (elems != null)
             {
                 foreach (TreeItem elem in elems)
@@ -285,19 +287,19 @@ namespace WebApplication1.Controllers
         private List<String> IsNotIDInChildren(int? ID, int? newParentID, List<String> stats)
         {
 
-            var children = _context.TreeItem.Where(m => m.Parent == ID);
+            var children = _context.TreeItem.Where(m => m.Parent == ID).ToList();
             if (children != null)
             {
                 foreach (TreeItem elem in children)
                 {
                     if (newParentID != elem.ID && newParentID != elem.Parent )
                     {
-                        stats.Add("error");
+                        stats.Add("ok");
                         IsNotIDInChildren(elem.ID, newParentID, stats);
                     }
                     else
                     {
-                        stats.Add("ok");
+                        stats.Add("error");
                     }
                 }
             }
@@ -410,22 +412,22 @@ namespace WebApplication1.Controllers
             treeItem = NewItem("Download", HomeID);
             int DownloadID = treeItem.ID;
 
-            treeItem = NewItem("tmp", HomeID);
+            _ = NewItem("tmp", HomeID);
 
-            treeItem = NewItem("a.zip", DownloadID);
-            treeItem = NewItem("b.zip", DownloadID);
-            treeItem = NewItem("c.zip", DownloadID);
-            treeItem = NewItem("d.zip", DownloadID);
-            treeItem = NewItem("z.zip", DownloadID);
-            treeItem = NewItem("A.zip", DownloadID);
-            treeItem = NewItem("B.zip", DownloadID);
-            treeItem = NewItem("D.zip", DownloadID);
-            treeItem = NewItem("1.zip", DownloadID);
-            treeItem = NewItem("2.zip", DownloadID);
-            treeItem = NewItem("3.zip", DownloadID);
+            _ = NewItem("a.zip", DownloadID);
+            _ = NewItem("b.zip", DownloadID);
+            _ = NewItem("c.zip", DownloadID);
+            _ = NewItem("d.zip", DownloadID);
+            _ = NewItem("z.zip", DownloadID);
+            _ = NewItem("A.zip", DownloadID);
+            _ = NewItem("B.zip", DownloadID);
+            _ = NewItem("D.zip", DownloadID);
+            _ = NewItem("1.zip", DownloadID);
+            _ = NewItem("2.zip", DownloadID);
+            _ = NewItem("3.zip", DownloadID);
 
-            treeItem = NewItem("some good music.mp3", MusicID);
-            treeItem = NewItem("music feat .NET Core .mp3", MusicID);
+            _ = NewItem("some good music.mp3", MusicID);
+            _ = NewItem("music feat .NET Core .mp3", MusicID);
 
             return Redirect("/TreeItems/GetRoots/");
         }

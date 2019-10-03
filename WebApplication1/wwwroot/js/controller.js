@@ -2,60 +2,53 @@
 var DESCENDING = 1
 
 class TreeGenerator {
-    constructor(rootID) {
-        this.rootDiv = ""
-        if (document.getElementById(rootID)) {
-            this.rootDiv = rootDiv;
-        } else {
-            this.rootDiv = document.createElement("div")
-            this.rootDiv.id = rootID
-            document.getElementById("tree").appendChild(this.rootDiv)
-        }
-
-        var treeId = this.getTreeId()
-        var urlTreesAsJson = this.geturlTreesAsJson()
-        // for redirections after edit/add      
-        $("input[name=rootId]").each(function (_, item) {
-            this.value = treeId;
-        })
-
-        var rootDiv = this.rootDiv;
+    constructor(rootID) {      
+        
+        console.log("1")
+        var treeId = getTreeId()
+        var urlTreesAsJson = getUrlTreesAsJson()
+       
         $.get(urlTreesAsJson, {}, function (data, response) {
             $.each(data, function (index, value) {
 
+                console.log(value)
                 if (value.parent == null) {
+                    console.log("item with parent nu;;")
                     var row = prepareRow(value)
-                    rootDiv.appendChild(row)
+                    document.getElementById(getTreeRootId()).appendChild(row)
                 }
                 else {
                     var parent = document.getElementById((value.parent).toString() + "_node");
                     var row = prepareRow(value)
                     parent.appendChild(row)
                 }
+
                 var ulNode = document.createElement("UL");
                 ulNode.id = (value.id).toString() + "_node"
                 row.appendChild(ulNode)
             })
-            fillOptionsWithParents(treeId);
+            fillOptionsWithParents(getTreeId());
             deletIconsWhenNoChildren();
             setActionsToIcons();
+            setRedirectionId();
         });
-    };
-
-
-    get getRootDiv()
-    {
-        return this.rootDiv;
-    }
-
-    getTreeId() {
-        return document.getElementById("tree_id").innerText;
-    };
-    geturlTreesAsJson() {
-        return '/api/treeitemapi/' + this.getTreeId();
     };
         
 }
+
+function getTreeId() {
+    var id = document.getElementById("tree_id").innerText;
+    return id;
+};
+
+function getTreeRootId() {
+    return "tree"
+};
+
+function getUrlTreesAsJson() {
+    return '/api/treeapi/' + this.getTreeId();
+};
+
 $(document).ready(function () {
-    th = new TreeGenerator("tree1")
+    th = new TreeGenerator()
 });
