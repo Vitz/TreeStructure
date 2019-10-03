@@ -1,0 +1,59 @@
+﻿@model IEnumerable<WebApplication1.Models.TreeItem>
+
+@{
+    ViewData["Title"] = "GetRoots";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+    <h1>GetRoots</h1>
+@if (User.IsInRole("admin"))
+{
+
+
+    <div class="d-inline-flex">
+        <form action="/TreeItems/GenerateExampleTree/" method="post" class="form-inline">
+            <input type="submit" class="btn btn-primary btn-sm" value="Generate Example Tree">
+        </form>
+        <form action="/TreeItems/AddRoot/" method="post">
+            <input type="submit" class="btn btn-primary btn-sm form-inline" value="New Tree">
+        </form>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Value)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                    <td>
+                        <a asp-action="GetTreeItems" asp-route-id="@item.ID">See items</a> |
+                        <a asp-action="GetTree" asp-route-id="@item.ID">See tree</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Sorry, this page is only for Administrators</p>
+}
