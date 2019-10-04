@@ -97,6 +97,7 @@ namespace WebApplication1.Controllers
       //  [ValidateAntiForgeryToken]
         public IActionResult Move(int id, [Bind("ID,Value,Parent")] TreeItem treeItem, int rootId)
         {
+            
             if (id != treeItem.ID) 
             {
                 TempData["msg"] = "Unknown error, sorry";
@@ -126,8 +127,11 @@ namespace WebApplication1.Controllers
             }
 
             bool isMovementCorret;
-            if (treeItem.Parent == null) isMovementCorret =  true;
-            else  {
+            if (treeItem.Parent == null) isMovementCorret = true;
+            else if (treeItem.Parent == treeItem.ID) {
+                isMovementCorret = false;
+            }
+            else { 
                 List<String> stats = new List<String>();
                 stats = IsNotIDInChildren(treeItem.ID, treeItem.Parent, stats);
                 if (stats.Contains("error")) isMovementCorret = false;
