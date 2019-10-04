@@ -7,10 +7,13 @@
 
 
 
-    <h1>GetRoots</h1>
+<h1>GetRoots</h1>
 @if (User.IsInRole("admin"))
 {
-
+    @if (TempData["msg"] != null)
+    {
+        <div class="alert alert-info">@TempData["msg"]</div>
+    }
 
     <div class="d-inline-flex">
         <form action="/TreeItems/GenerateExampleTree/" method="post" class="form-inline">

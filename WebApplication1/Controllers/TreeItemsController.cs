@@ -379,6 +379,8 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public IActionResult GenerateExampleTree()
         {
+            var time = DateTime.Now;
+
             TreeItem treeItem = NewItem("Drive C", null);
             int DriveCID = treeItem.ID;
             treeItem = NewItem("Program Files", DriveCID);
@@ -432,6 +434,9 @@ namespace WebApplication1.Controllers
 
             _ = NewItem("some good music.mp3", MusicID);
             _ = NewItem("music feat .NET Core .mp3", MusicID);
+
+            var timeResultStr = (DateTime.Now - time).TotalMilliseconds.ToString();
+            TempData["msg"] = "Operation time: " + timeResultStr;
 
             return Redirect("/TreeItems/GetRoots/");
         }

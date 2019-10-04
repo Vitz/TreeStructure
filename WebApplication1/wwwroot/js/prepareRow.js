@@ -16,6 +16,7 @@
     var liNode = document.createElement("LI");
     var textId = document.createElement("INPUT");
     var textValue = document.createElement("INPUT");
+    textValue.toggleAttribute("readonly");
     textValue.classList = textValue.classList + ' form-control' + ' tree_value';
     var textParent = document.createElement("INPUT");
     textId.value = value.id;
