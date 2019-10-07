@@ -104,8 +104,8 @@ function sortBranch(branch, sortType) {
 }
 
 function defaultCompare(a, b) {
-    a = String(a);
-    b = String(b);
+    a = String(a).toUpperCase();
+    b = String(b).toUpperCase();
     if (a < b) return -1;
     else if (a > b) return 1;
     else return 0;
