@@ -10,9 +10,7 @@ class TreeGenerator {
         $.get(urlTreesAsJson, {}, function (data, response) {
             $.each(data, function (index, value) {
 
-                console.log(value)
                 if (value.parent == null) {
-                    console.log("item with parent nu;;")
                     var row = prepareRow(value)
                     document.getElementById(getTreeRootId()).appendChild(row)
                 }

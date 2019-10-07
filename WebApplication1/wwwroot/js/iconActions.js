@@ -39,7 +39,6 @@ function setActionMoveIcons() {
                 var id = data.id
                 var value = data.value
                 var parent = data.parent
-                //alert(parent)
                 document.getElementById("selected_id").value = id
                 document.getElementById("selected_value").value = value
                 $("option[value=" + parent + "]").attr("selected", "selected")
@@ -79,11 +78,16 @@ function sortSingleUl(branch, sortType) {
         var values = $toSort.get().map(function (li) {
             return li.getElementsByClassName("tree_value")[0];
         });
-        values.sort(function (a, b) { return a.value > b.value });
-        if (sortType == ASCENDING) values.reverse()
+        values = values.sort(function (a, b) {
+            res = defaultCompare(a.value, b.value);
+            return (res)
+        });
+        console.log(typeof(values))
+        console.log(values)
+
+        if (sortType == ASCENDING) { values.reverse(); }
         values.forEach(function (val, index) {
             $($toSort[index]).parent().append(val.parentElement.parentElement.parentElement)
-
         });
     });
 }
@@ -97,4 +101,12 @@ function sortBranch(branch, sortType) {
                 sortBranch(item);
         });
     });
+}
+
+function defaultCompare(a, b) {
+    a = String(a);
+    b = String(b);
+    if (a < b) return -1;
+    else if (a > b) return 1;
+    else return 0;
 }
