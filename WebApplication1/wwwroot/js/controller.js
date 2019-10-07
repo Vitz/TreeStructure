@@ -4,7 +4,6 @@ var DESCENDING = 1
 class TreeGenerator {
     constructor(rootID) {      
         
-        console.log("1")
         var treeId = getTreeId()
         var urlTreesAsJson = getUrlTreesAsJson()
        
@@ -31,6 +30,12 @@ class TreeGenerator {
             deletIconsWhenNoChildren();
             setActionsToIcons();
             setRedirectionId();
+        }).fail(function () {
+            var fail = document.createElement("div");
+            $(fail).addClass("alert alert-warning");
+            $(fail).append("There is no items in this view.");
+            $("#alerts").append($(fail))
+             
         });
     };
         

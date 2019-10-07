@@ -18,12 +18,15 @@
     </div>
 </div>
 
+
 @if (User.IsInRole("admin"))
 {
-    @if (TempData["msg"] != null)
-    {
-        <div class="alert alert-success">@TempData["msg"]</div>
-    }
+    <div id="alerts">
+        @if (TempData["msg"] != null)
+        {
+            <div class="alert alert-success" id="success_div">@TempData["msg"]</div>
+        }
+    </div>
 
     <ul id="tree" name="tree"></ul>
 
