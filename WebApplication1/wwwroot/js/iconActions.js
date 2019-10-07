@@ -82,9 +82,6 @@ function sortSingleUl(branch, sortType) {
             res = defaultCompare(a.value, b.value);
             return (res)
         });
-        console.log(typeof(values))
-        console.log(values)
-
         if (sortType == ASCENDING) { values.reverse(); }
         values.forEach(function (val, index) {
             $($toSort[index]).parent().append(val.parentElement.parentElement.parentElement)
