@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebApplication1.Models.TreeItem>
 
 @{
-    ViewData["Title"] = "GetRoots";
+    ViewData["Title"] = "Roots";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,7 +16,7 @@
     }
 
     <div class="d-inline-flex">
-        <form action="/TreeItems/GenerateExampleTree/" method="post" class="form-inline">
+        <form action="/GenerateExampleTree/GenerateExampleTree/" method="post" class="form-inline">
             <input type="submit" class="btn btn-primary btn-sm" value="Generate Example Tree">
         </form>
         <form action="/TreeItems/AddRoot/" method="post">

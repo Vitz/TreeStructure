@@ -17,13 +17,11 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
-        // GET: TreeItems
         public async Task<IActionResult> Index()
         {
             return View(await _context.TreeItem.ToListAsync());
         }
 
-        // GET: TreeItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,13 +39,11 @@ namespace WebApplication1.Controllers
             return View(treeItem);
         }
 
-        // GET: TreeItems/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TreeItems/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Value,Parent")] TreeItem treeItem)
@@ -61,7 +57,6 @@ namespace WebApplication1.Controllers
             return View(treeItem);
         }
 
-        // POST: TreeItems/CreateSimple
         [HttpPost]
         public async Task<IActionResult> CreateSimple([Bind("ID,Value,Parent")] TreeItem treeItem, int rootId)
         {
@@ -75,7 +70,6 @@ namespace WebApplication1.Controllers
 
             return Redirect("/TreeItems/GetTree/" + rootId.ToString());
         }
-
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -92,9 +86,7 @@ namespace WebApplication1.Controllers
             return View(treeItem);
         }
 
-        // POST: TreeItems/Move/5
         [HttpPost]
-      //  [ValidateAntiForgeryToken]
         public IActionResult Move(int id, [Bind("ID,Value,Parent")] TreeItem treeItem, int rootId)
         {
             
@@ -119,7 +111,6 @@ namespace WebApplication1.Controllers
                     TempData["msg"] = "Edited";
                     return Redirect("/TreeItems/GetTree/" + rootId.ToString());
                 }
-
             }          
             else
             {
@@ -168,10 +159,7 @@ namespace WebApplication1.Controllers
             return View(treeItem);
         }
 
-
-        // POST: TreeItems/Edit/5
         [HttpPost]
-       // [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Value,Parent")] TreeItem treeItem)
         {
             if (id != treeItem.ID)
@@ -201,8 +189,6 @@ namespace WebApplication1.Controllers
             return View(treeItem);
         }
 
-
-        // GET: TreeItems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -220,7 +206,6 @@ namespace WebApplication1.Controllers
             return View(treeItem);
         }
 
-        // POST: TreeItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -241,32 +226,27 @@ namespace WebApplication1.Controllers
             var roots = await _context.TreeItem.Where(m => m.Parent == 0 || m.Parent == null).ToListAsync();
             if (roots == null)
             {
-                return NotFound(); //no any roots
+                return NotFound(); 
             }
 
             return View(roots);
         }
 
-
-
-
         public async Task<IActionResult> GetTreeItems(int id)
         {
-            List<TreeItem> tree = new List<TreeItem>(); // one tree 
+            List<TreeItem> tree = new List<TreeItem>(); 
 
-            //find 1st root            
-            var root = await _context.TreeItem             //find 1st root            
+            var root = await _context.TreeItem                         
 
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (root == null)
             {
-                return NotFound(); //no any roots
+                return NotFound(); 
             }
 
             tree = BuildTreeRec(root, tree);
             return View(tree.ToList());
         }
-
 
         private List<TreeItem> BuildTreeRec(TreeItem root, List<TreeItem> tree) 
         {
@@ -286,7 +266,6 @@ namespace WebApplication1.Controllers
         {
             return View(id);
         }
-
 
         private List<String> IsNotIDInChildren(int? ID, int? newParentID, List<String> stats)
         {
@@ -311,7 +290,6 @@ namespace WebApplication1.Controllers
         }
 
 
-        // POST: TreeItems/DeleteWithChildren/5
         [HttpPost]
         public IActionResult DeleteWithChildren(int id, int rootId)
         {
@@ -325,8 +303,6 @@ namespace WebApplication1.Controllers
                 TempData["msg"] = "Can't delete it";
             }
             return Redirect("/TreeItems/GetTree/" + rootId.ToString());
-
-
         }
 
         private void DeleteWithChildrenRec(int branchID)
@@ -367,77 +343,10 @@ namespace WebApplication1.Controllers
             return treeItem;
         }
 
-        // POST: TreeItems/AddRoot/
         [HttpPost]
         public IActionResult AddRoot()
         {
             TreeItem treeItem = NewItem("<new root>", null);
-            return Redirect("/TreeItems/GetRoots/");
-        }
-
-        // POST: TreeItems/GenerateTree/
-        [HttpPost]
-        public IActionResult GenerateExampleTree()
-        {
-            var time = DateTime.Now;
-
-            TreeItem treeItem = NewItem("Drive C", null);
-            int DriveCID = treeItem.ID;
-            treeItem = NewItem("Program Files", DriveCID);
-            int ProgramFilesID = treeItem.ID;
-            treeItem = NewItem("Program Files (x86)", DriveCID);
-            int ProgramFilesID64 = treeItem.ID;
-            treeItem = NewItem("Users", DriveCID);
-            int UsersID = treeItem.ID;
-            treeItem = NewItem("Windows", DriveCID);
-            int WindowsID = treeItem.ID;
-            treeItem = NewItem("Trash", DriveCID);
-            int TrashID = treeItem.ID;
-
-            treeItem = NewItem("WinRar", ProgramFilesID);
-            int WinRarID = treeItem.ID;
-            treeItem = NewItem("Internet Explorer", ProgramFilesID);
-            int InternetExplorerID = treeItem.ID;
-            treeItem = NewItem("Total Commander", ProgramFilesID);
-            int TotalCommanderID = treeItem.ID;
-
-            treeItem = NewItem("FireFox", ProgramFilesID64);
-            int FireFoxID = treeItem.ID;
-
-            treeItem = NewItem("Home", UsersID);
-            int HomeID = treeItem.ID;
-            treeItem = NewItem("Public", UsersID);
-            int PublicID = treeItem.ID;
-
-            treeItem = NewItem("Format.exe", WindowsID);
-
-            treeItem = NewItem("Document", HomeID);
-            treeItem = NewItem("Desktop", HomeID);
-            treeItem = NewItem("Music", HomeID);
-            int MusicID = treeItem.ID;
-            treeItem = NewItem("Download", HomeID);
-            int DownloadID = treeItem.ID;
-
-            _ = NewItem("tmp", HomeID);
-
-            _ = NewItem("a.zip", DownloadID);
-            _ = NewItem("b.zip", DownloadID);
-            _ = NewItem("c.zip", DownloadID);
-            _ = NewItem("d.zip", DownloadID);
-            _ = NewItem("z.zip", DownloadID);
-            _ = NewItem("A.zip", DownloadID);
-            _ = NewItem("B.zip", DownloadID);
-            _ = NewItem("D.zip", DownloadID);
-            _ = NewItem("1.zip", DownloadID);
-            _ = NewItem("2.zip", DownloadID);
-            _ = NewItem("3.zip", DownloadID);
-
-            _ = NewItem("some good music.mp3", MusicID);
-            _ = NewItem("music feat .NET Core .mp3", MusicID);
-
-            var timeResultStr = (DateTime.Now - time).TotalMilliseconds.ToString();
-            TempData["msg"] = "Operation time: " + timeResultStr;
-
             return Redirect("/TreeItems/GetRoots/");
         }
     }

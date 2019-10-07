@@ -20,29 +20,19 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
-        /*   // GET: api/TreeApi
-           [HttpGet]
-           public async Task<ActionResult<IEnumerable<TreeItem>>> GetTreeItem()
-           {
-               return await _context.TreeItem.ToListAsync();
-           }*/
 
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<TreeItem>>> GetTree(int id)
         {
-
-            List<TreeItem> tree = new List<TreeItem>(); 
+            List<TreeItem> tree = new List<TreeItem>();
             var root = await _context.TreeItem.FirstOrDefaultAsync(m => m.ID == id);
             if (root == null)
             {
-                return NotFound(); //no any roots
+                return NotFound();
             }
-
             tree = BuildTreeRec(root, tree);
             return tree.ToList();
-            // ;
         }
-
 
         private List<TreeItem> BuildTreeRec(TreeItem item, List<TreeItem> tree)
         {
@@ -57,7 +47,5 @@ namespace WebApplication1.Controllers
             }
             return tree;
         }
-
-
     }
 }

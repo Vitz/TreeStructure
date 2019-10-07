@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<WebApplication1.Models.TreeItem>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Items";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
 @if (User.IsInRole("admin"))
 {
-
     <p>
         <a asp-action="Create">Create New</a>
     </p>

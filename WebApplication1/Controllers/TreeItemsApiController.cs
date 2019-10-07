@@ -20,14 +20,12 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
-        // GET: api/TreeItemApi
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TreeItem>>> GetTreeItem()
         {
             return await _context.TreeItem.ToListAsync();
         }
 
-        // GET: api/TreeItemApi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TreeItem>> GetTreeItem(int id)
         {
@@ -41,9 +39,6 @@ namespace WebApplication1.Controllers
             return treeItem;
         }
 
-        // PUT: api/TreeItemApi/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTreeItem(int id, TreeItem treeItem)
         {
@@ -51,9 +46,7 @@ namespace WebApplication1.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(treeItem).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -69,13 +62,9 @@ namespace WebApplication1.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
-        // POST: api/TreeItemApi
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
         public async Task<ActionResult<TreeItem>> PostTreeItem(TreeItem treeItem)
         {
@@ -85,7 +74,6 @@ namespace WebApplication1.Controllers
             return CreatedAtAction("GetTreeItem", new { id = treeItem.ID }, treeItem);
         }
 
-        // DELETE: api/TreeItemApi/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<TreeItem>> DeleteTreeItem(int id)
         {
