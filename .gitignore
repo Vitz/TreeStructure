@@ -341,5 +341,5 @@ healthchecksdb
 
 
 # DB DATA
-appsettings.json
-Startup.cs
+WebApplication1/appsettings.json
+WebApplication1/Startup.cs
