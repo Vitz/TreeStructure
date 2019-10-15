@@ -1,10 +1,5 @@
 # TreeStructure
-App provide tree structure based on adjacency tree model written in C#. 
+App provide tree structure based on adjacency tree model in written in C#. 
 
 ASP.NET CORE 3.0  
-MSSQL https://remotemysql.com 4.8.5
-
-App:
-https://webapplication120191003032354.azurewebsites.net
-
-![pic](https://github.com/Vitz/TreeStructure/blob/master/tree.png)
+MSSQL
