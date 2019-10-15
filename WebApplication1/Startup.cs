@@ -6,6 +6,8 @@ using WebApplication1.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace WebApplication1
 {
@@ -21,11 +23,16 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-/*            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();*/
+            services.AddDbContext<ApplicationDbContext>(
+                    options => options.UseMySql("Server=remotemysql.com;database='LiFxhtQH6i';User Id=LiFxhtQH6i;Password=Pb3VzS3Bj8; port=3306", // replace with your Connection String
+                    mySqlOptions =>
+                    {
+                        mySqlOptions.ServerVersion(new Version(4, 8, 5), ServerType.MySql); // replace with your Server Version and Type
+                    }
+            ));
+
+            /*            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                            .AddEntityFrameworkStores<ApplicationDbContext>();*/
 
             services.AddIdentity<IdentityUser, IdentityRole>()
             .AddRoleManager<RoleManager<IdentityRole>>()
