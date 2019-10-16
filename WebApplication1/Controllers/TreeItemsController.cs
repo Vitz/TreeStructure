@@ -144,15 +144,10 @@ namespace WebApplication1.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TreeItemExists(treeItem.ID))
-                    {
-                        TempData["msg"] = "Unknown error, sorry";
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                   
+                    TempData["msg"] = "Unknown error, sorry";
+                    return NotFound();
+      
                 }
                 return Redirect("/TreeItems/GetTree/" + rootId.ToString());
             }
