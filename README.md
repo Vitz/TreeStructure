@@ -1,4 +1,4 @@
-App provide tree structure based on adjacency tree model written in C#.  
+App provides tree structure based on the adjacency tree model written in C#.  
 
 ASP.NET CORE 3.0  
 MSSQL https://remotemysql.com 4.8.5   
