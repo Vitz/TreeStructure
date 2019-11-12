@@ -19,8 +19,6 @@
 </div>
 
 
-@if (User.IsInRole("admin"))
-{
     <div id="alerts">
         @if (TempData["msg"] != null)
         {
@@ -105,11 +103,7 @@
         </div>
     </div>
 
-}
-else
-{
-    <p>Sorry, this page is only for Administrators</p>
-}
+
 <script src="~/js/iconClass.js"></script>
 <script src="~/js/iconActions.js"></script>
 <script src="~/js/treeView.js"></script>
